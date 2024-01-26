@@ -177,6 +177,104 @@ Views table:
 | 4   |
 | 7       |
 
+ ### Q.5 Write a solution to find the IDs of the invalid tweets. The tweet is invalid if the number of characters used in the content of the tweet is strictly greater than 15. Return the result table in any order.
+ 
+   `Table Name - Tweets `
+  
+| Column Name | Type | 
+| ----------- | ---  |
+| tweet_id      | int  |
+| content        | varchar |
+
+tweet_id is the primary key (column with unique values) for this table.
+This table contains all the tweets in a social media app.
+
+The result format is in the following example.
+
+**Example 1:** 
+
+**Input:**
+
+Tweets table:
+| tweet_id    | content    | 
+| ----------- | ---------  | 
+|   1         |  Vote for Biden   | 
+|      2      |  Let us make America great again!  | 
+
+
+ ###  Solution - 
+    
+    SELECT tweet_id 
+    FROM Tweets
+    WHERE len(content)>15;
+
+**Output:**
+
+| tweet_id | 
+|----------- |
+| 2   |
+
+ ### Q.6 Write a solution to show the unique ID of each user, If a user does not have a unique ID replace just show null. Return the result table in any order.
+ 
+   `Table Name - Employees `
+  
+| Column Name | Type | 
+| ----------- | ---  |
+| id      | int  |
+| name        | varchar |
+
+id is the primary key (column with unique values) for this table.
+Each row of this table contains the id and the name of an employee in a company.
+
+   `Table Name - EmployeeUNI `
+  
+| Column Name | Type | 
+| ----------- | ---  |
+| id      | int  |
+| unique_id             | int |
+
+(id, unique_id) is the primary key (combination of columns with unique values) for this table.
+Each row of this table contains the id and the corresponding unique id of an employee in the company.
+
+The result format is in the following example.
+
+**Example 1:** 
+
+**Input:**
+
+Employees  table:
+| id    | name    | 
+| ----------- | ---------  | 
+|   1         | Alice      | 
+|      7      |  Bob       | 
+|      11     |  Meir      | 
+|      90     | Winston   |
+|      3      | Jonathan   | 
+
+EmployeeUNI   table:
+| id     | unique_id     | 
+| -----------| ---------| 
+|   3        | 1         | 
+|      11    |  2       | 
+|      90    | 3        |
+
+
+ ###  Solution - 
+    
+    SELECT eU.unique_id, e.name 
+    FROM Employee as e
+    LEFT JOIN EmployeeUNI as eU ON e.id=eU.id;
+
+**Output:**
+
+| unique_id | name     |
+|-----------|----------|
+| null      |Alice     |
+| null      |Bob       |
+| 2         |Meir      |
+| 3         |Winston   |
+| 1         |Jonathan  |
+
 
 
 
