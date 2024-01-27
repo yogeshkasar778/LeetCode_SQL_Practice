@@ -319,25 +319,91 @@ Product  table:
 
 | product_id       | product_name       | 
 | -----------| ---------| 
-|   1        | 100       |
-|      2    |  100       | 
-|      3    | 200        |
+|   100        | Nokia               |
+|      200    |  Apple               | 
+|      300    | Samsung              |
 
  ###  Solution - 
     
-    SELECT eU.unique_id, e.name 
-    FROM Employee as e
-    LEFT JOIN EmployeeUNI as eU ON e.id=eU.id;
+    SELECT product_name, year, price 
+    FROM Sales as s
+    INNER JOIN Product as p ON s.product_id=p.product_id;
 
 **Output:**
 
-| unique_id | name     |
+| product_name  | year       |price|
+|-----------|----------|--|
+| Nokia              |2008       |5000  |
+| Nokia              |2009         |5000  |
+| Apple                 |2011        |9000  |
+
+ ### Q.8 Write a solution to find the IDs of the users who visited without making any transactions and the number of times they made these types of visits. Return the result table sorted in any order.
+ 
+   `Table Name - Visits `
+  
+| Column Name | Type | 
+| ----------- | ---  |
+| visit_id               | int  |
+| customer_id           | int |
+
+visit_id is the column with unique values for this table.
+This table contains information about the customers who visited the mall.
+
+   `Table Name - Transactions `
+  
+| Column Name | Type | 
+| ----------- | ---  |
+| transaction_id  | int  |
+| visit_id        | int |
+| amount          | int |
+
+transaction_id is the column with unique values for this table.
+This table contains information about the transactions made during the visit_id.
+
+The result format is in the following example.
+
+**Example 1:** 
+
+**Input:**
+
+Visits table:
+| visit_id       | customer_id       | 
+| -----------| ---------| 
+|   1        | 23                   |
+|   2        |  9                  |
+|   4        | 30                  |
+|   5       | 54                   |
+|   6       |  96                 |
+|   7      | 54                  |
+|   8       | 54     |
+
+
+Transactions  table:
+
+| transaction_id        | visit_id        |amount  |
+| -----------| ---------| ----|
+|   2        | 5               |310|
+|      3    |  5               |300 |
+|      9    | 5              |200|
+|      12    |  1               | 910|
+|      13    | 2              |970|
+
+ ###  Solution - 
+    
+    SELECT v.customer_id, count(v,visit_id) as count_no_trans
+    FROM Visit as v
+    LEFT JOIN Transactions as t ON v.visit_id=t.visit_id
+    WHERE t.visit_id is null
+    GROUP BY v.customer_id;
+
+**Output:**
+
+| customer_id   | count_no_trans        |
 |-----------|----------|
-| null      |Alice     |
-| null      |Bob       |
-| 2         |Meir      |
-| 3         |Winston   |
-| 1         |Jonathan  |
+| 54              |2       |
+| 30              |1         |
+| 96                 |1        |
+
 
 
 
