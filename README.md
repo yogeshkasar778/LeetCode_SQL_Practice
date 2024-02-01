@@ -404,6 +404,51 @@ Transactions  table:
 | 30              |1         |
 | 96                 |1        |
 
+ ### Q.9 Write a solution to find all dates' Id with higher temperatures compared to its previous dates (yesterday). Return the result table in any order.
+ 
+   `Table Name - Weather `
+  
+| Column Name | Type | 
+| ----------- | ---  |
+| id  | int  |
+| recordDate        | date |
+| temperature          | int |
+
+id is the column with unique values for this table.
+There are no different rows with the same recordDate.
+This table contains information about the temperature on a certain day.
+
+The result format is in the following example.
+
+**Example 1:** 
+
+**Input:**
+
+
+
+Transactions  table:
+
+| id        | recordDate        |temperature  |
+| -----------| ---------| ----|
+|   1        | 2015-01-01           |10|
+|      2    |  2015-01-02            |25 |
+|      3    | 2015-01-03            |20|
+|      4    | 2015-01-04               | 30|
+
+ ###  Solution - 
+    
+    SELECT a.id
+    FROM Weather as a, Weather as b
+    WHERE a.temperature > b.temperature and datediff(a.tempera)
+
+**Output:**
+
+| customer_id   | count_no_trans        |
+|-----------|----------|
+| 54              |2       |
+| 30              |1         |
+| 96                 |1        |
+
 
 
 
