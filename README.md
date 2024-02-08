@@ -572,6 +572,91 @@ Bonus  table:
 | John | null  |
 | Dan  | 500   |
 
+ ### Q.12 Write a solution to find the number of times each student attended each exam. Return the result table ordered by student_id and subject_name.
+ 
+   `Table Name - Students  `
+  
+| Column Name | Type | 
+| ----------- | ---  |
+| student_id    | int     |
+| student_name  | varchar |
+
+student_id is the primary key (column with unique values) for this table.
+Each row of this table contains the ID and the name of one student in the school.
+ 
+   `Table Name - Subjects  `
+  
+| Column Name | Type | 
+| ----------- | ---  |
+| subject_name | varchar |
+
+subject_name is the primary key (column with unique values) for this table.
+Each row of this table contains the name of one subject in the school.
+
+  `Table Name - Examinations  `
+  
+| Column Name | Type | 
+| ----------- | ---  |
+| student_id   | int     |
+| subject_name | varchar |
+
+There is no primary key (column with unique values) for this table. It may contain duplicates.
+Each student from the Students table takes every course from the Subjects table.
+Each row of this table indicates that a student with ID student_id attended the exam of subject_name.
+ 
+
+**Example 1:** 
+
+**Input:**
+
+Students  table:
+
+| student_id | student_name |
+| -----------| ---------| 
+| 1          | Alice        |
+| 2          | Bob          |
+| 13         | John         |
+| 6          | Alex         |
+
+Subjects   table:
+
+| subject_name |
+|-----------|
+| Math         |
+| Physics      |
+| Programming  |
+
+Examinations    table:
+
+| student_id | subject_name |
+|-----------|-------------|
+| 1          | Math         |
+| 1          | Physics      |
+| 1          | Programming  |
+| 2          | Programming  |
+| 1          | Physics      |
+| 1          | Math         |
+| 13         | Math         |
+| 13         | Programming  |
+| 13         | Physics      |
+| 2          | Math         |
+| 1          | Math         |
+
+ ###  Solution - 
+    
+    select e.name, b.bonus 
+    from Employee as e
+    left join Bonus as b on e.empId=b.empId
+    where bonus <1000 or bonus is null;
+
+**Output:**
+
+| name | bonus |
+|-----------|--|
+| Brad | null  |
+| John | null  |
+| Dan  | 500   |
+
 
 
 
