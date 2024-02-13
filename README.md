@@ -644,19 +644,32 @@ Examinations    table:
 
  ###  Solution - 
     
-    select e.name, b.bonus 
-    from Employee as e
-    left join Bonus as b on e.empId=b.empId
-    where bonus <1000 or bonus is null;
+    select s.student_id,
+           s.student_name,
+           sub.subject_name,
+           count(e.subject_name) as attended_exams
+    from Students as s
+    cross join Subjects as sub
+    left join Examinations as e on s.student_id=e.student_id and sub.subject_name=e.subject_name
+    group by s.student_id, s.student_name, sub.subject_name
+    order by s.student_id, s.student_name;
 
 **Output:**
 
-| name | bonus |
-|-----------|--|
-| Brad | null  |
-| John | null  |
-| Dan  | 500   |
-
+| student_id | student_name | subject_name | attended_exams |
+|-----------|--             |---           |--              |
+| 1          | Alice        | Math         | 3              |
+| 1          | Alice        | Physics      | 2              |
+| 1          | Alice        | Programming  | 1              |
+| 2          | Bob          | Math         | 1              |
+| 2          | Bob          | Physics      | 0              |
+| 2          | Bob          | Programming  | 1              |
+| 6          | Alex         | Math         | 0              |
+| 6          | Alex         | Physics      | 0              |
+| 6          | Alex         | Programming  | 0              |
+| 13         | John         | Math         | 1              |
+| 13         | John         | Physics      | 1              |
+| 13         | John         | Programming  | 1              |
 
 
 
