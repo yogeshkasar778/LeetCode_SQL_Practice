@@ -711,12 +711,135 @@ Cinema table:
     where id%2!=0 and description != 'boring'
     order by rating desc;
 
-**Output:**
+ ### Q.14 Write a solution to find the average selling price for each product. average_price should be rounded to 2 decimal places. Return the result table in any order.
+ 
+ Table: Prices
 
-| id | movie      | description | rating |
-|----|------------|-------------|--------|
-| 5  | House card | Interesting | 9.1    |
-| 1  | War        | great 3D    | 8.9    |
+| Column Name   | Type    |
++---------------+---------+
+| product_id    | int     |
+| start_date    | date    |
+| end_date      | date    |
+| price         | int     |
+
+(product_id, start_date, end_date) is the primary key (combination of columns with unique values) for this table.
+Each row of this table indicates the price of the product_id in the period from start_date to end_date.
+For each product_id there will be no two overlapping periods. That means there will be no two intersecting periods for the same product_id.
+ 
+Table: UnitsSold
+
+| Column Name   | Type    |
++---------------+---------+
+| product_id    | int     |
+| purchase_date | date    |
+| units         | int     |
+
+This table may contain duplicate rows.
+Each row of this table indicates the date, units, and product_id of each product sold. 
+ 
+The result format is in the following example.
+
+Example 1:
+
+Input: 
+
+Prices table:
+
+| product_id | start_date | end_date   | price  |
+|------------|------------|------------|--------|
+| 1          | 2019-02-17 | 2019-02-28 | 5      |
+| 1          | 2019-03-01 | 2019-03-22 | 20     |
+| 2          | 2019-02-01 | 2019-02-20 | 15     |
+| 2          | 2019-02-21 | 2019-03-31 | 30     |
+
+UnitsSold table:
+
+| product_id | purchase_date | units |
+|------------|---------------|-------|
+| 1          | 2019-02-25    | 100   |
+| 1          | 2019-03-01    | 15    |
+| 2          | 2019-02-10    | 200   |
+| 2          | 2019-03-22    | 30    |
+
+ ###  Solution - 
+    
+    select * from Cinema
+    where id%2!=0 and description != 'boring'
+    order by rating desc;
+    
+Output: 
+
+| product_id | average_price |
+|------------|---------------|
+| 1          | 6.96          |
+| 2          | 16.96         |
+
+ ### Q.15 Write an SQL query that reports the average experience years of all the employees for each project, rounded to 2 digits. Return the result table in any order.
+ 
+Table: Project
+
++-------------+---------+
+| Column Name | Type    |
++-------------+---------+
+| project_id  | int     |
+| employee_id | int     |
++-------------+---------+
+(project_id, employee_id) is the primary key of this table.
+employee_id is a foreign key to Employee table.
+Each row of this table indicates that the employee with employee_id is working on the project with project_id.
+ 
+
+Table: Employee
+
++------------------+---------+
+| Column Name      | Type    |
++------------------+---------+
+| employee_id      | int     |
+| name             | varchar |
+| experience_years | int     |
++------------------+---------+
+employee_id is the primary key of this table. It's guaranteed that experience_years is not NULL.
+Each row of this table contains information about one employee.
+
+The result format is in the following example.
+
+Example 1:
+
+Input: 
+
+Project table:
+
+| project_id  | employee_id |
++-------------+-------------+
+| 1           | 1           |
+| 1           | 2           |
+| 1           | 3           |
+| 2           | 1           |
+| 2           | 4           |
+
+Employee table:
+
+| employee_id | name   | experience_years |
++-------------+--------+------------------+
+| 1           | Khaled | 3                |
+| 2           | Ali    | 2                |
+| 3           | John   | 1                |
+| 4           | Doe    | 2                |
++-------------+--------+------------------+
+
+ ###  Solution - 
+    
+    select p.project_id, round(avg(e.experience_years*1.0),2) as average_years 
+    from Project as p
+    left join Employee as e on p.employee_id=e.employee_id
+    group by p.project_id
+    
+Output: 
+
+| product_id | average_price |
+|------------|---------------|
+| 1          | 6.96          |
+| 2          | 16.96         |
 
 
 ##  :dart: `Difficulty Level - Medium`
